@@ -7,6 +7,7 @@ var io = require('socket.io')(server);
 var path = require('path');
 var async = require('async');
 var moment = require('moment');
+var bodyParser = require('body-parser');
 
 // Passsing in a sample config
 var config = {
@@ -85,6 +86,9 @@ io.sockets.on('connection', function (socket) {
 
 app.use(express.static('client'))
 
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+
 app.get('/1', function (req, res) {
   res.sendfile(path.join(__dirname, '/client/html/index.html'))
 })
@@ -95,6 +99,12 @@ app.get('/', function (req, res) {
 
 app.get('/test', function (req, res) {
   res.sendfile(path.join(__dirname, '/client/html/chartTest.html'))
+})
+
+app.post('/post_sandbox', function(req, res, next){
+  console.log(req.body.sandbox);
+  res.send("GREAT SUCCESS");
+
 })
 
 // Creating Express server
