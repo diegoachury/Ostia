@@ -183,6 +183,7 @@ exports.dbInitializer = async function () {
   fs.readFile('ostia-ascii.txt', 'utf8', (error, data) => {
     console.log(data);
   });
+
   return new Promise(async (resolve, reject) => {
     const choice = 1;
     if (choice === 0) {
@@ -208,6 +209,15 @@ exports.dbInitializer = async function () {
 
       // Find if each currency exists in our MongoDB
       const DBQueries = [];
+      const currencyData = {};
+      // query database for currencies
+      // map resolves to object
+
+
+
+
+
+
       for (let i = 0; i < orderbook.length; i++) {
         // pause(1000);
         const pair = Object.keys(orderbook[i])[0];
@@ -238,11 +248,11 @@ exports.dbInitializer = async function () {
         });
         DBQueries.push(DBQuery);
       }
+      // Wait for 
       let DBUpdateResolves;
       try {
         DBUpdateResolves = await Promise.all(DBQueries);
         resolve(DBUpdateResolves);
-        resolve();
       } catch (e) {
         console.log(e);
         reject(DBUpdateResolves);
